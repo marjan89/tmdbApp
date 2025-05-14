@@ -55,7 +55,10 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.androidx.compose.navigation)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
     implementation(project(":network"))
+    implementation(project(":domain"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

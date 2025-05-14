@@ -6,7 +6,7 @@ import io.ktor.client.request.HttpRequestPipeline
 import io.ktor.client.request.parameter
 import io.ktor.util.AttributeKey
 
-class TmdbAuthInterceptor {
+internal class TmdbAuthInterceptor {
     companion object Plugin : HttpClientPlugin<Config, TmdbAuthInterceptor> {
 
         const val API_KEY = "api_key"
@@ -14,9 +14,8 @@ class TmdbAuthInterceptor {
 
         override val key = AttributeKey<TmdbAuthInterceptor>(ATTRIBUTE_KEY_NAME)
         
-        override fun prepare(block: Config.() -> Unit): TmdbAuthInterceptor {
-            return TmdbAuthInterceptor()
-        }
+        override fun prepare(block: Config.() -> Unit): TmdbAuthInterceptor =
+            TmdbAuthInterceptor()
         
         override fun install(plugin: TmdbAuthInterceptor, scope: HttpClient) {
             scope.requestPipeline.intercept(HttpRequestPipeline.Before) {

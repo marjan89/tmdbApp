@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.sinisa.bragitask.di.repositoryModule
 import com.sinisa.bragitask.di.viewModelModule
 import com.sinisa.bragitask.network.di.networkModule
 import com.sinisa.bragitask.ui.App
@@ -17,6 +18,7 @@ class MainActivity : ComponentActivity() {
         val koinApp = koinApplication {
             modules(viewModelModule)
             modules(networkModule)
+            modules(repositoryModule)
         }
         
         setContent {

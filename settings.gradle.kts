@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "BragiTask"
 include(":app")
 include(":network")
- 
+include(":domain")

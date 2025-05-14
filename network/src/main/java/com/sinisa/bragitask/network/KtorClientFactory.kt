@@ -17,7 +17,7 @@ import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-object KtorClientFactory {
+internal object KtorClientFactory {
     fun create(): HttpClient = HttpClient(Android) {
         install(ContentNegotiation) {
             json(createJson())

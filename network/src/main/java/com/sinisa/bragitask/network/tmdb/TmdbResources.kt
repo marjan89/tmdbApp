@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Resource("/movie")
-class Movies {
+internal class Movies {
     @Serializable
     @Resource("{id}")
     class Details(
@@ -17,7 +17,7 @@ class Movies {
 
 @Serializable
 @Resource("/discover")
-class Discover {
+internal class Discover {
     @Serializable
     @Resource("/movie")
     class Movie(
@@ -29,7 +29,7 @@ class Discover {
 
 @Serializable
 @Resource("/genre")
-class Genre {
+internal class Genre {
     @Serializable
     @Resource("/movie/list")
     class MovieList(val parent: Genre = Genre())
