@@ -2,11 +2,21 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.secrets.gradle.plugin)
+}
+
+// Configure Secrets Gradle Plugin to use secrets.properties
+secrets {
+    propertiesFileName = "secrets.properties"
 }
 
 android {
     namespace = "com.sinisa.bragitask.network"
     compileSdk = libs.versions.compile.sdk.get().toInt()
+    
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
