@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.sinisa.bragitask.di.viewModelModule
+import com.sinisa.bragitask.network.di.networkModule
 import com.sinisa.bragitask.ui.App
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
@@ -15,6 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val koinApp = koinApplication {
             modules(viewModelModule)
+            modules(networkModule)
         }
         
         setContent {
