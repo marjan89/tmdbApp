@@ -1,5 +1,6 @@
 package com.sinisa.bragitask.network
 
+import com.sinisa.bragitask.network.tmdb.TmdbApiConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -11,6 +12,8 @@ import io.ktor.client.plugins.resources.Resources
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.URLProtocol
+import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -29,6 +32,11 @@ object KtorClientFactory {
 
         defaultRequest {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
+            url {
+                protocol = URLProtocol.HTTPS
+                host = TmdbApiConfig.BASE_URL
+                path(TmdbApiConfig.VERSION)
+            }
         }
     }
 
