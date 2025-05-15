@@ -4,6 +4,7 @@ import com.sinisa.bragitask.network.tmdb.TmdbApiConfig
 import com.sinisa.bragitask.network.tmdb.TmdbAuthInterceptor
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -14,9 +15,9 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
-import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import kotlin.time.Duration.Companion.seconds
 
 internal object KtorClientFactory {
     fun create(): HttpClient = HttpClient(Android) {
@@ -32,6 +33,12 @@ internal object KtorClientFactory {
         install(Resources)
         
         install(TmdbAuthInterceptor)
+        
+        install(HttpTimeout) {
+            requestTimeoutMillis = NetworkConfig.Timeout.REQUEST.seconds.inWholeMilliseconds
+            connectTimeoutMillis = NetworkConfig.Timeout.CONNECT.seconds.inWholeMilliseconds
+            socketTimeoutMillis = NetworkConfig.Timeout.SOCKET.seconds.inWholeMilliseconds
+        }
 
         defaultRequest {
             header(HttpHeaders.ContentType, ContentType.Application.Json)

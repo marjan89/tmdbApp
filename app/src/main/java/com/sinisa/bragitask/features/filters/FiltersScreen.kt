@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sinisa.bragitask.domain.models.Genre
+import com.sinisa.bragitask.ui.components.Error
 import com.sinisa.bragitask.ui.components.Loading
 
 @Composable
@@ -46,7 +47,12 @@ fun FilterScreen(
         }
 
         is FiltersState.Error -> {
-            Error(state.message)
+            Error(
+                message = state.message,
+                onClick = {
+                    viewModel.loadGenres()
+                }
+            )
         }
     }
 }

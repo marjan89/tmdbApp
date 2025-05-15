@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sinisa.bragitask.data.repositories.DiscoveryRepository
 import com.sinisa.bragitask.features.mappers.mapToPresentation
+import com.sinisa.bragitask.network.util.retry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 sealed class MoviesState {
     data object Loading : MoviesState()
@@ -26,15 +30,26 @@ class MoviesViewModel(
     fun loadMovies() {
         _viewState.value = MoviesState.Loading
         viewModelScope.launch {
-            runCatching {
-                discoveryRepository
-                    .getMovies(1)
-                    .results
-                    .map { it.mapToPresentation() }
-                    .let { _viewState.value = MoviesState.Success(it) }
-            }.onFailure {
-                _viewState.value = MoviesState.Error(it.message ?: "Unknown error")
-            }
+            retry(
+                block = {
+                    val movieItems = discoveryRepository
+                        .getMovies(1)
+                        .results
+                        .map { it.mapToPresentation() }
+                    _viewState.value = MoviesState.Success(
+                        movieItems = movieItems
+                    )
+                },
+                errorBlock = { exception ->
+                    val errorMessage = when (exception) {
+                        is UnknownHostException, is ConnectException, is SocketTimeoutException ->
+                            "No internet connection available. Please check your network settings."
+
+                        else -> exception.message
+                    }
+                    _viewState.value = MoviesState.Error(errorMessage ?: "Unknown error")
+                }
+            )
         }
     }
 }

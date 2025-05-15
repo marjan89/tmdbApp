@@ -35,7 +35,12 @@ fun MoviesScreen(
         }
 
         is MoviesState.Error -> {
-            Error(state.message)
+            Error(
+                message = state.message,
+                onClick = {
+                    viewModel.loadMovies()
+                }
+            )
         }
     }
 }
