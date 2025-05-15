@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sinisa.bragitask.data.repositories.DiscoveryRepository
 import com.sinisa.bragitask.features.mappers.mapToPresentation
-import com.sinisa.bragitask.network.util.retry
+import com.sinisa.bragitask.network.util.withRetry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.net.ConnectException
@@ -30,7 +30,7 @@ class MoviesViewModel(
     fun loadMovies() {
         _viewState.value = MoviesState.Loading
         viewModelScope.launch {
-            retry(
+            withRetry(
                 block = {
                     val movieItems = discoveryRepository
                         .getMovies(1)

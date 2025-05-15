@@ -4,7 +4,7 @@ object NetworkConfig {
 
     object Retry {
         const val MAX_RETRIES = 3
-        const val RETRY_DELAY = 10_000L
+        const val RETRY_DELAY = 30_000L
     }
 
     object Timeout {
