@@ -1,4 +1,4 @@
-package com.sinisa.bragitask.ui
+package com.sinisa.bragitask
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

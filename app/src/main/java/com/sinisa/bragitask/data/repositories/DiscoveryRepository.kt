@@ -1,7 +1,6 @@
 package com.sinisa.bragitask.data.repositories
 
-import com.sinisa.bragitask.data.extensions.mapToGenre
-import com.sinisa.bragitask.data.extensions.mapToMovie
+import com.sinisa.bragitask.data.mappers.mapToDomain
 import com.sinisa.bragitask.domain.models.Genre
 import com.sinisa.bragitask.domain.models.Movie
 import com.sinisa.bragitask.domain.repositories.IDiscoveryRepository
@@ -17,11 +16,11 @@ class DiscoveryRepository(
         tmdbApiService
             .discoverMovies(page, genres)
             .results
-            .map { it.mapToMovie() }
+            .map { it.mapToDomain() }
 
     override suspend fun getGenres(): List<Genre> =
         tmdbApiService
             .getMovieGenres()
             .genres
-            .map { it.mapToGenre() }
+            .map { it.mapToDomain() }
 }

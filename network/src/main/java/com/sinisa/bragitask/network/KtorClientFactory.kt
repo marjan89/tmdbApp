@@ -1,6 +1,7 @@
 package com.sinisa.bragitask.network
 
 import com.sinisa.bragitask.network.tmdb.TmdbApiConfig
+import com.sinisa.bragitask.network.tmdb.TmdbAuthInterceptor
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -25,17 +26,18 @@ internal object KtorClientFactory {
 
         install(Logging) {
             logger = createLogger()
-            level = LogLevel.HEADERS
+            level = LogLevel.ALL
         }
 
         install(Resources)
+        
+        install(TmdbAuthInterceptor)
 
         defaultRequest {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
             url {
                 protocol = URLProtocol.HTTPS
                 host = TmdbApiConfig.BASE_URL
-                path(TmdbApiConfig.VERSION)
             }
         }
     }

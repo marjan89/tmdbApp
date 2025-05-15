@@ -9,11 +9,12 @@ lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 composeBom = "2025.05.00"
 navigation-compose = "2.9.0"
-koin = "3.5.3"
+koin = "4.0.2"
 ktor = "3.1.3"
 kotlin-serialization = "1.8.1"
 secrets-gradle-plugin = "2.0.1"
-paging = "3.3.0"
+paging = "3.3.6"
+coil = "2.6.0"
 
 # SDK Configuration
 min-sdk = "24"
@@ -55,6 +56,8 @@ ktor-client-resources = { group = "io.ktor", name = "ktor-client-resources", ver
 
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

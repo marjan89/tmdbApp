@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import com.sinisa.bragitask.di.repositoryModule
 import com.sinisa.bragitask.di.viewModelModule
 import com.sinisa.bragitask.network.di.networkModule
-import com.sinisa.bragitask.ui.App
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
 
