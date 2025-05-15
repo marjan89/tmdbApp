@@ -1,21 +1,17 @@
 package com.sinisa.bragitask.features.movies
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sinisa.bragitask.ui.components.Error
+import com.sinisa.bragitask.ui.components.Loading
 
 @Composable
 fun MoviesScreen(
@@ -65,31 +61,5 @@ fun MovieList(
                 cardListItemData = item
             )
         }
-    }
-}
-
-@Composable
-fun Loading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(48.dp),
-            color = MaterialTheme.colorScheme.primary
-        )
-    }
-}
-
-@Composable
-fun Error(message: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        androidx.compose.material3.Text(
-            text = message,
-            color = MaterialTheme.colorScheme.error
-        )
     }
 }

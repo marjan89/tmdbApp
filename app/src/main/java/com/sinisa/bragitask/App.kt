@@ -26,9 +26,7 @@ fun App() {
             modifier = Modifier.fillMaxSize(),
             floatingActionButton = {
                 FilterButton(modifier = Modifier.padding(16.dp)) {
-                    navController.navigate(NavGraph.Filters) {
-                        launchSingleTop = true
-                    }
+                    navController.navigate(NavGraph.Filters)
                 }
             },
         ) { innerPadding ->
@@ -39,7 +37,7 @@ fun App() {
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                mainRouter()
+                mainRouter(navController)
             }
         }
     }

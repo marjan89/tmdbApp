@@ -23,20 +23,12 @@ class MoviesViewModel(
     private val _viewState = MutableStateFlow<MoviesState>(MoviesState.Loading)
     val viewState = _viewState
 
-    private val _genreFilter = MutableStateFlow<String?>(null)
-
-    fun setGenreFilter(genres: String?) {
-        if (_genreFilter.value != genres) {
-            _genreFilter.value = genres
-            loadMovies()
-        }
-    }
-
     fun loadMovies() {
+        _viewState.value = MoviesState.Loading
         viewModelScope.launch {
             runCatching {
                 discoveryRepository
-                    .getMovies(1, _genreFilter.value)
+                    .getMovies(1)
                     .results
                     .map { it.mapToPresentation() }
                     .let { _viewState.value = MoviesState.Success(it) }

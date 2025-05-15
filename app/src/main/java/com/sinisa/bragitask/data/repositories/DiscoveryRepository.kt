@@ -16,11 +16,20 @@ class DiscoveryRepository(
     private val tmdbApiService: TmdbApiService
 ) : IDiscoveryRepository {
 
+    override var selectedGenreId: Int = NO_GENRE_ID
+        set(value) {
+            if (field != value) {
+                field = value
+            }
+        }
+
     override suspend fun getMovies(
-        page: Int,
-        genres: String?
+        page: Int
     ): Page<Movie> {
-        val moviePage = tmdbApiService.discoverMovies(page = page, genres = genres)
+        val moviePage = tmdbApiService.discoverMovies(
+            page = page,
+            genres = if (selectedGenreId == NO_GENRE_ID) null else selectedGenreId.toString()
+        )
 
         val movieDetails: List<MovieDetailDto> = supervisorScope {
             moviePage
@@ -51,6 +60,10 @@ class DiscoveryRepository(
         }.getOrElse {
             dto.toMovieDetailDto()
         }
+
+    companion object {
+        const val NO_GENRE_ID = 0
+    }
 }
 
 private fun MovieDto.toMovieDetailDto(): MovieDetailDto = MovieDetailDto(
