@@ -23,7 +23,7 @@ fun MoviesScreen(
     viewModel: MoviesViewModel
 ) {
     LaunchedEffect(key1 = Unit) {
-        viewModel.getMovies()
+        viewModel.loadMovies()
     }
 
     when (val state = viewModel.viewState.collectAsState().value) {
