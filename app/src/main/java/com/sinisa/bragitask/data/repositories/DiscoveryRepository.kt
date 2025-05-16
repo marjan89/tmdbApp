@@ -9,12 +9,15 @@ import com.sinisa.bragitask.network.tmdb.api.ITmdbApiService
 import com.sinisa.bragitask.network.tmdb.mapper.toMovieDetailDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDetailDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDto
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 
 class DiscoveryRepository(
-    private val tmdbApiService: ITmdbApiService
+    private val tmdbApiService: ITmdbApiService,
+    private val dispatcher: CoroutineDispatcher
 ) : IDiscoveryRepository {
 
     override var selectedGenreId: Int = NO_GENRE_ID
@@ -26,7 +29,7 @@ class DiscoveryRepository(
 
     override suspend fun getMovies(
         page: Int
-    ): Page<Movie> {
+    ): Page<Movie> = withContext(dispatcher) {
         val moviePage = tmdbApiService.discoverMovies(
             page = page,
             genres = if (selectedGenreId == NO_GENRE_ID) null else selectedGenreId.toString()
@@ -41,7 +44,7 @@ class DiscoveryRepository(
                 .awaitAll()
         }
 
-        return Page(
+        Page(
             results = movieDetails.map { it.mapToDomain() },
             totalResults = moviePage.totalResults,
             totalPages = moviePage.totalPages,
@@ -49,18 +52,20 @@ class DiscoveryRepository(
         )
     }
 
-    override suspend fun getGenres(): List<Genre> =
+    override suspend fun getGenres(): List<Genre> = withContext(dispatcher) {
         tmdbApiService
             .getMovieGenres()
             .genres
             .map { it.mapToDomain() }
+    }
 
-    private suspend fun fetchMovieDetails(dto: MovieDto): MovieDetailDto =
+    private suspend fun fetchMovieDetails(dto: MovieDto): MovieDetailDto = withContext(dispatcher) {
         runCatching {
             tmdbApiService.getMovieDetails(dto.id)
         }.getOrElse {
             dto.toMovieDetailDto()
         }
+    }
 
     companion object {
         const val NO_GENRE_ID = 0
