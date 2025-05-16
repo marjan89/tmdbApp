@@ -2,7 +2,7 @@ package com.sinisa.bragitask.features.movies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sinisa.bragitask.data.repositories.DiscoveryRepository
+import com.sinisa.bragitask.domain.repositories.IDiscoveryRepository
 import com.sinisa.bragitask.features.mappers.mapToPresentation
 import com.sinisa.bragitask.network.util.withRetry
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ sealed class MoviesState {
 }
 
 class MoviesViewModel(
-    private val discoveryRepository: DiscoveryRepository
+    private val discoveryRepository: IDiscoveryRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow<MoviesState>(MoviesState.Loading)

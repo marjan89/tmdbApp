@@ -2,8 +2,8 @@ package com.sinisa.bragitask.features.filters
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sinisa.bragitask.data.repositories.DiscoveryRepository
 import com.sinisa.bragitask.domain.models.Genre
+import com.sinisa.bragitask.domain.repositories.IDiscoveryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -18,7 +18,7 @@ sealed class FiltersState {
 }
 
 class FiltersViewModel(
-    private val discoveryRepository: DiscoveryRepository
+    private val discoveryRepository: IDiscoveryRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow<FiltersState>(FiltersState.Loading)

@@ -5,7 +5,8 @@ import com.sinisa.bragitask.domain.models.Genre
 import com.sinisa.bragitask.domain.models.Movie
 import com.sinisa.bragitask.domain.models.Page
 import com.sinisa.bragitask.domain.repositories.IDiscoveryRepository
-import com.sinisa.bragitask.network.tmdb.TmdbApiService
+import com.sinisa.bragitask.network.tmdb.api.ITmdbApiService
+import com.sinisa.bragitask.network.tmdb.mapper.toMovieDetailDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDetailDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDto
 import kotlinx.coroutines.async
@@ -13,7 +14,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.supervisorScope
 
 class DiscoveryRepository(
-    private val tmdbApiService: TmdbApiService
+    private val tmdbApiService: ITmdbApiService
 ) : IDiscoveryRepository {
 
     override var selectedGenreId: Int = NO_GENRE_ID
@@ -65,12 +66,3 @@ class DiscoveryRepository(
         const val NO_GENRE_ID = 0
     }
 }
-
-private fun MovieDto.toMovieDetailDto(): MovieDetailDto = MovieDetailDto(
-    id = id,
-    title = title,
-    posterPath = posterPath,
-    voteAverage = voteAverage,
-    budget = 0,
-    revenue = 0
-)

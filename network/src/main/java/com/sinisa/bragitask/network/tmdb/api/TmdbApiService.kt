@@ -1,5 +1,8 @@
-package com.sinisa.bragitask.network.tmdb
+package com.sinisa.bragitask.network.tmdb.api
 
+import com.sinisa.bragitask.network.tmdb.Discover
+import com.sinisa.bragitask.network.tmdb.Genre
+import com.sinisa.bragitask.network.tmdb.Movies
 import com.sinisa.bragitask.network.tmdb.model.GenreListResponseDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDetailDto
 import com.sinisa.bragitask.network.tmdb.model.MovieDto
@@ -11,14 +14,14 @@ import org.koin.core.component.KoinComponent
 
 class TmdbApiService(
     private val client: HttpClient
-) : KoinComponent {
+) : ITmdbApiService, KoinComponent {
 
-    suspend fun getMovieDetails(movieId: Int): MovieDetailDto =
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailDto =
         client.get(Movies.Details(id = movieId)).body()
 
-    suspend fun discoverMovies(
-        page: Int = 1,
-        genres: String? = null
+    override suspend fun discoverMovies(
+        page: Int,
+        genres: String?
     ): PageDto<MovieDto> =
         client.get(
             Discover.Movie(
@@ -27,6 +30,6 @@ class TmdbApiService(
             )
         ).body()
 
-    suspend fun getMovieGenres(): GenreListResponseDto =
+    override suspend fun getMovieGenres(): GenreListResponseDto =
         client.get(Genre.MovieList()).body()
 }
